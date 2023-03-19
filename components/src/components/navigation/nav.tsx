@@ -1,11 +1,19 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './nav.scss';
 
-class Navigation extends React.Component<{ name: string }> {
-  constructor(props: { name: string }) {
-    super(props);
-  }
+class Navigation extends React.Component {
   render() {
-    return <div>{this.props.name}</div>;
+    return (
+      <div className="nav_bar">
+        <NavLink to={'/'} className={({ isActive }) => (isActive ? 'active_link' : 'link')}>
+          Home
+        </NavLink>
+        <NavLink to={'/about'} className={({ isActive }) => (isActive ? 'active_link' : 'link')}>
+          About Us
+        </NavLink>
+      </div>
+    );
   }
 }
 

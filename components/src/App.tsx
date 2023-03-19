@@ -1,10 +1,16 @@
-// import { useState } from 'react';
-import './App.scss';
 import React from 'react';
-import Header from './components/header/header';
+import { Route, Routes } from 'react-router-dom';
+import About from './components/about/about';
+import Home from './components/homePage/HomePage';
 
 function App() {
-  return <Header></Header>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home></Home>}></Route>
+      <Route path="/about" element={<About />}></Route>
+      <Route path="*" element={<h1>404 not found</h1>}></Route>
+    </Routes>
+  );
 }
 
 export default App;
