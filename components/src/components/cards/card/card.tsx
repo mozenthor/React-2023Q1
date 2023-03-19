@@ -12,11 +12,7 @@ class Card extends React.Component<{ data: ICard }> {
           {this.props.data.brand} {this.props.data.model}
         </div>
         <div className="card_image_wrapper">
-          <img
-            className="card_image"
-            src={`../../../../public/images/${this.props.data.id}.webp`}
-            alt=""
-          />
+          <img className="card_image" src={`/images/${this.props.data.id}.webp`} alt="" />
         </div>
         <ul className="card_description_wrapper">
           <li className="card_description_item">
