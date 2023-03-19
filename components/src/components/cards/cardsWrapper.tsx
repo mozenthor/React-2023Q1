@@ -1,4 +1,4 @@
-import { mobileData } from '../../assets/data/mobileData';
+import mobileData from '../../assets/data/mobileData';
 import React from 'react';
 import Card from './card/card';
 import './cardsWrapper.scss';

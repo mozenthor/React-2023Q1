@@ -1,6 +1,6 @@
 import { ICard } from '../../components/cards/card/card';
 
-export const mobileData: ICard[] = [
+const mobileData: ICard[] = [
   {
     id: '1',
     brand: 'Apple',
@@ -74,3 +74,5 @@ export const mobileData: ICard[] = [
     released: '2017',
   },
 ];
+
+export default mobileData;
