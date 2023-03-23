@@ -1,4 +1,4 @@
-import { ICard } from '../../components/cards/card/card';
+import { ICard } from '../../../src/components/cards/card/card';
 
 const mobileData: ICard[] = [
   {
