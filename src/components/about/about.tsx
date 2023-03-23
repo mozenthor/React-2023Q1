@@ -1,4 +1,3 @@
-import Header from '../../components/header/header';
 import React from 'react';
 import './about.scss';
 
@@ -6,7 +5,6 @@ class About extends React.Component {
   render() {
     return (
       <div>
-        <Header></Header>
         <div className="about_wrapper">
           <h2>About Us</h2>
           <p className="about_text">

@@ -1,17 +1,19 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import './nav.scss';
+import NavItem from './navItem/navItem';
 
 class Navigation extends React.Component {
+  navData = [
+    { path: '/', name: 'Home' },
+    { path: '/about', name: 'About US' },
+    { path: '/form', name: 'Form' },
+  ];
   render() {
     return (
       <div className="nav_bar">
-        <NavLink to={'/'} className={({ isActive }) => (isActive ? 'active_link' : 'link')}>
-          Home
-        </NavLink>
-        <NavLink to={'/about'} className={({ isActive }) => (isActive ? 'active_link' : 'link')}>
-          About Us
-        </NavLink>
+        {this.navData.map((el) => (
+          <NavItem key={el.name} path={el.path} name={el.name}></NavItem>
+        ))}
       </div>
     );
   }

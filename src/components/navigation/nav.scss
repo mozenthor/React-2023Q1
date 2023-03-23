@@ -5,26 +5,3 @@
   font-size: 20px;
   margin-right: 20px;
 }
-
-.link {
-  color: black;
-  padding: 7px 10px;
-  border-radius: 10px;
-}
-
-.link:hover {
-  color: rgb(16, 173, 113);
-  transition: .3s;
-}
-
-.active_link {
-  color: rgb(8, 104, 8);
-  padding: 7px 10px;
-  border-radius: 10px;
-  background-color: rgb(199, 198, 198);
-}
-
-.active_link:hover {
-  color: rgb(16, 173, 113);
-  transition: .3s;
-}

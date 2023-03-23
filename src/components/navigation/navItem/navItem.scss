@@ -1,0 +1,22 @@
+.link {
+  color: black;
+  padding: 7px 10px;
+  border-radius: 10px;
+}
+
+.link:hover {
+  color: rgb(16, 173, 113);
+  transition: .3s;
+}
+
+.link.active {
+  color: rgb(8, 104, 8);
+  padding: 7px 10px;
+  border-radius: 10px;
+  background-color: rgb(199, 198, 198);
+}
+
+.link.active:hover {
+  color: rgb(16, 173, 113);
+  transition: .3s;
+}
