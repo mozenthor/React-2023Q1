@@ -3,7 +3,6 @@ import { currentData, data } from './formData/formData';
 import { formPageValidatoin } from './formPageValidation';
 import InputCheckbox from './inputCheckbox/inputCheckbox';
 import InputDate from './inputDate/inputDate';
-import InputFile from './inputFile/inputFile';
 import InputName from './inputName/inputName';
 import InputRadio from './inputRadio/inputRadio';
 import SelectCity from './selectCity/selectCity';
@@ -23,7 +22,7 @@ class FormPage extends React.Component<object> {
     };
   }
 
-  sendCurrentData = () => {
+  getCurrentData = () => {
     currentData.name = this.formRef.current?.inputName.value;
     currentData.date = this.formRef.current?.inputDate.value;
     currentData.city = this.formRef.current?.selectCity.value;
@@ -33,13 +32,12 @@ class FormPage extends React.Component<object> {
 
   onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    this.sendCurrentData();
+    this.getCurrentData();
     this.setState(formPageValidatoin(currentData));
-    if (Object.values(this.state).indexOf(false) != -1) {
+    if (!Object.values(formPageValidatoin(currentData)).includes(false)) {
       data.push(currentData);
       this.formRef.current?.reset();
     }
-    console.log(this.formRef.current?.inputFile.value);
   };
 
   render() {
@@ -51,7 +49,6 @@ class FormPage extends React.Component<object> {
           <SelectCity valid={this.state.cityValid} />
           <InputRadio valid={this.state.radioValid} />
           <InputCheckbox valid={this.state.checkboxValid} />
-          <InputFile valid={this.state.radioValid} />
           <input type="submit" value="Submit" />
         </form>
       </div>
