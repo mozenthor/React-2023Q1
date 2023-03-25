@@ -1,4 +1,4 @@
-export const currentData: IData = {
+export const currentData: IFormDate = {
   name: '',
   date: '',
   city: '',
@@ -7,9 +7,9 @@ export const currentData: IData = {
   image: null,
 };
 
-export const data: IData[] = [];
+export const data: IFormDate[] = [];
 
-export interface IData {
+export interface IFormDate {
   name: string | undefined;
   date: string | undefined;
   city: string | undefined;

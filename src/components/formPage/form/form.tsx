@@ -1,5 +1,4 @@
 import React from 'react';
-import { currentData, data } from '../formData/formData';
 import { formPageValidatoin } from './formValidation';
 import InputCheckbox from '../inputCheckbox/inputCheckbox';
 import InputDate from '../inputDate/inputDate';
@@ -7,8 +6,9 @@ import InputFile from '../inputFile/inputFile';
 import InputName from '../inputName/inputName';
 import InputRadio from '../inputRadio/inputRadio';
 import SelectCity from '../selectCity/selectCity';
+import { currentData, data } from '../formData/formData';
 
-class FormPage extends React.Component<object> {
+class Form extends React.Component<object> {
   state: IFormState;
   nameRef = React.createRef<HTMLInputElement>();
   dateRef = React.createRef<HTMLInputElement>();
@@ -86,4 +86,4 @@ export interface IFormState {
   fileRef: boolean;
 }
 
-export default FormPage;
+export default Form;
