@@ -10,12 +10,12 @@ class InputRadio extends React.Component<{ valid: boolean }> {
       <div>
         <div>Male/Female:</div>
         <div>
-          <input type="radio" id="male" name="radio" />
+          <input type="radio" id="male" value="Male" name="inputRadio" />
           <label htmlFor="male">Male</label>
-          <input type="radio" id="female" name="radio" />
+          <input type="radio" id="female" value="Female" name="inputRadio" />
           <label htmlFor="female">Female</label>
         </div>
-        {this.props.valid ? <div>its ok</div> : <div>ERROR</div>}
+        {this.props.valid ? <div></div> : <div>Choose one of the options</div>}
       </div>
     );
   }

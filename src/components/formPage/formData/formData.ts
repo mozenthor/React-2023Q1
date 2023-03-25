@@ -1,17 +1,17 @@
-export const data: IData = {
+export const currentData: IData = {
   name: '',
   date: '',
   city: '',
-  male: false,
-  female: false,
+  radio: '',
   checkbox: false,
 };
 
-interface IData {
-  name: string | undefined;
-  date: string | undefined;
-  city: string | undefined;
-  male: boolean | undefined;
-  female: boolean | undefined;
-  checkbox: boolean | undefined;
+export const data: IData[] = [];
+
+export interface IData {
+  name: string;
+  date: string;
+  city: string;
+  radio: string;
+  checkbox: boolean;
 }

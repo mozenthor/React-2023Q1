@@ -9,7 +9,7 @@ class SelectCity extends React.Component<{ valid: boolean }> {
     return (
       <div>
         <div>City:</div>
-        <select name="city" id="city">
+        <select name="selectCity" id="city">
           <option value="" hidden></option>
           <option value="Minsk">Minsk</option>
           <option value="Brest">Brest</option>
@@ -18,7 +18,7 @@ class SelectCity extends React.Component<{ valid: boolean }> {
           <option value="Vitebsk">Vitebsk</option>
           <option value="Mogilev">Mogilev</option>
         </select>
-        {this.props.valid ? <div>its ok</div> : <div>ERROR</div>}
+        {this.props.valid ? <div></div> : <div>Choose your city</div>}
       </div>
     );
   }

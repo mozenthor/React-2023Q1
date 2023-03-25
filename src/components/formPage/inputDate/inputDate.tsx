@@ -9,8 +9,8 @@ class InputDate extends React.Component<{ valid: boolean }> {
     return (
       <div>
         <div>Birthday</div>
-        <input type="date" name="date" />
-        {this.props.valid ? <div>its ok</div> : <div>ERROR</div>}
+        <input type="date" name="inputDate" />
+        {this.props.valid ? <div></div> : <div>Choose correct date</div>}
       </div>
     );
   }

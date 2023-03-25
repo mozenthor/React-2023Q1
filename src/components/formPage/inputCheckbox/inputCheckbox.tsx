@@ -8,9 +8,9 @@ class InputCheckbox extends React.Component<{ valid: boolean }> {
   render() {
     return (
       <div>
-        <input type="checkbox" id="personalData" name="checkbox" />
+        <input type="checkbox" id="personalData" name="inputCheckbox" />
         <label htmlFor="personalData">I consent to my personal data</label>
-        {this.props.valid ? <div>its ok</div> : <div>ERROR</div>}
+        {this.props.valid ? <div></div> : <div>Please give consent</div>}
       </div>
     );
   }
