@@ -1,3 +1,3 @@
-export function inputCheckboxValidation(value: boolean): boolean {
-  return value;
+export function inputCheckboxValidation(value: boolean | undefined): boolean {
+  return !!value;
 }

@@ -9,7 +9,7 @@ import { selectCityValidation } from './selectCity/selectCityValidation';
 export function formPageValidatoin(currentData: IData): IFormState {
   const validObject: IFormState = {
     nameValid: inputNameValidation(currentData.name),
-    dateValid: inputDateValidation(new Date(currentData.date)),
+    dateValid: inputDateValidation(currentData.date),
     cityValid: selectCityValidation(currentData.city),
     radioValid: inputRadioValidation(currentData.radio),
     checkboxValid: inputCheckboxValidation(currentData.checkbox),

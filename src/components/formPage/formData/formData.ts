@@ -9,9 +9,9 @@ export const currentData: IData = {
 export const data: IData[] = [];
 
 export interface IData {
-  name: string;
-  date: string;
-  city: string;
-  radio: string;
-  checkbox: boolean;
+  name: string | undefined;
+  date: string | undefined;
+  city: string | undefined;
+  radio: string | undefined;
+  checkbox: boolean | undefined;
 }

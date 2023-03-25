@@ -1,7 +1,10 @@
 import React from 'react';
 
-class SelectCity extends React.Component<{ valid: boolean }> {
-  constructor(props: { valid: boolean }) {
+class SelectCity extends React.Component<{
+  valid: boolean;
+  cityRef: React.RefObject<HTMLSelectElement>;
+}> {
+  constructor(props: { valid: boolean; cityRef: React.RefObject<HTMLSelectElement> }) {
     super(props);
   }
 
@@ -9,7 +12,7 @@ class SelectCity extends React.Component<{ valid: boolean }> {
     return (
       <div>
         <div>City:</div>
-        <select name="selectCity" id="city">
+        <select name="selectCity" id="city" ref={this.props.cityRef}>
           <option value="" hidden></option>
           <option value="Minsk">Minsk</option>
           <option value="Brest">Brest</option>

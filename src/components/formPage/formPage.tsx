@@ -8,11 +8,16 @@ import InputRadio from './inputRadio/inputRadio';
 import SelectCity from './selectCity/selectCity';
 
 class FormPage extends React.Component<object> {
-  formRef: React.RefObject<HTMLFormElement>;
   state: IFormState;
+  nameRef = React.createRef<HTMLInputElement>();
+  dateRef = React.createRef<HTMLInputElement>();
+  cityRef = React.createRef<HTMLSelectElement>();
+  checkboxRef = React.createRef<HTMLInputElement>();
+  radioRefMale = React.createRef<HTMLInputElement>();
+  radioRefFemale = React.createRef<HTMLInputElement>();
+  formRef = React.createRef<HTMLFormElement>();
   constructor(props: object) {
     super(props);
-    this.formRef = React.createRef();
     this.state = {
       nameValid: true,
       dateValid: true,
@@ -23,11 +28,17 @@ class FormPage extends React.Component<object> {
   }
 
   getCurrentData = () => {
-    currentData.name = this.formRef.current?.inputName.value;
-    currentData.date = this.formRef.current?.inputDate.value;
-    currentData.city = this.formRef.current?.selectCity.value;
-    currentData.radio = this.formRef.current?.inputRadio.value;
-    currentData.checkbox = this.formRef.current?.inputCheckbox.checked;
+    currentData.name = this.nameRef.current?.value;
+    currentData.date = this.dateRef.current?.value;
+    currentData.city = this.cityRef.current?.value;
+    currentData.checkbox = this.checkboxRef.current?.checked;
+    currentData.radio = this.radioCheck();
+  };
+
+  radioCheck = () => {
+    if (this.radioRefMale.current?.checked) return this.radioRefMale.current?.value;
+    if (this.radioRefFemale.current?.checked) return this.radioRefFemale.current?.value;
+    else return '';
   };
 
   onSubmit = (event: React.FormEvent) => {
@@ -35,20 +46,25 @@ class FormPage extends React.Component<object> {
     this.getCurrentData();
     this.setState(formPageValidatoin(currentData));
     if (!Object.values(formPageValidatoin(currentData)).includes(false)) {
-      data.push(currentData);
+      data.push({ ...currentData });
       this.formRef.current?.reset();
     }
+    console.log(data);
   };
 
   render() {
     return (
       <div>
         <form ref={this.formRef} onSubmit={this.onSubmit}>
-          <InputName valid={this.state.nameValid} />
-          <InputDate valid={this.state.dateValid} />
-          <SelectCity valid={this.state.cityValid} />
-          <InputRadio valid={this.state.radioValid} />
-          <InputCheckbox valid={this.state.checkboxValid} />
+          <InputName valid={this.state.nameValid} nameRef={this.nameRef} />
+          <InputDate valid={this.state.dateValid} dateRef={this.dateRef} />
+          <SelectCity valid={this.state.cityValid} cityRef={this.cityRef} />
+          <InputRadio
+            valid={this.state.radioValid}
+            radioRefMale={this.radioRefMale}
+            radioRefFemale={this.radioRefFemale}
+          />
+          <InputCheckbox valid={this.state.checkboxValid} checkboxRef={this.checkboxRef} />
           <input type="submit" value="Submit" />
         </form>
       </div>
