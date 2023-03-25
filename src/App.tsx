@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import About from './components/about/about';
 import Home from './components/homePage/HomePage';
 import Header from './components/header/header';
+import FormPage from './components/formPage/formPage';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Route path="/" element={<Header />}>
         <Route path="/" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/form" element={<About />}></Route>
+        <Route path="/form" element={<FormPage />}></Route>
       </Route>
       <Route path="*" element={<NotFoundPage />}></Route>
     </Routes>
