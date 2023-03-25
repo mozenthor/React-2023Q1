@@ -4,6 +4,7 @@ export const currentData: IData = {
   city: '',
   radio: '',
   checkbox: false,
+  image: null,
 };
 
 export const data: IData[] = [];
@@ -14,4 +15,5 @@ export interface IData {
   city: string | undefined;
   radio: string | undefined;
   checkbox: boolean | undefined;
+  image: File | undefined | null;
 }

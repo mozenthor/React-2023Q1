@@ -1,11 +1,12 @@
 import React from 'react';
-import { currentData, data } from './formData/formData';
-import { formPageValidatoin } from './formPageValidation';
-import InputCheckbox from './inputCheckbox/inputCheckbox';
-import InputDate from './inputDate/inputDate';
-import InputName from './inputName/inputName';
-import InputRadio from './inputRadio/inputRadio';
-import SelectCity from './selectCity/selectCity';
+import { currentData, data } from '../formData/formData';
+import { formPageValidatoin } from './formValidation';
+import InputCheckbox from '../inputCheckbox/inputCheckbox';
+import InputDate from '../inputDate/inputDate';
+import InputFile from '../inputFile/inputFile';
+import InputName from '../inputName/inputName';
+import InputRadio from '../inputRadio/inputRadio';
+import SelectCity from '../selectCity/selectCity';
 
 class FormPage extends React.Component<object> {
   state: IFormState;
@@ -15,6 +16,7 @@ class FormPage extends React.Component<object> {
   checkboxRef = React.createRef<HTMLInputElement>();
   radioRefMale = React.createRef<HTMLInputElement>();
   radioRefFemale = React.createRef<HTMLInputElement>();
+  fileRef = React.createRef<HTMLInputElement>();
   formRef = React.createRef<HTMLFormElement>();
   constructor(props: object) {
     super(props);
@@ -24,6 +26,7 @@ class FormPage extends React.Component<object> {
       cityValid: true,
       radioValid: true,
       checkboxValid: true,
+      fileRef: true,
     };
   }
 
@@ -33,6 +36,7 @@ class FormPage extends React.Component<object> {
     currentData.city = this.cityRef.current?.value;
     currentData.checkbox = this.checkboxRef.current?.checked;
     currentData.radio = this.radioCheck();
+    currentData.image = this.fileRef.current?.files?.[0];
   };
 
   radioCheck = () => {
@@ -65,6 +69,7 @@ class FormPage extends React.Component<object> {
             radioRefFemale={this.radioRefFemale}
           />
           <InputCheckbox valid={this.state.checkboxValid} checkboxRef={this.checkboxRef} />
+          <InputFile valid={this.state.fileRef} fileRef={this.fileRef} />
           <input type="submit" value="Submit" />
         </form>
       </div>
@@ -78,6 +83,7 @@ export interface IFormState {
   cityValid: boolean;
   radioValid: boolean;
   checkboxValid: boolean;
+  fileRef: boolean;
 }
 
 export default FormPage;

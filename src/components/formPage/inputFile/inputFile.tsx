@@ -1,7 +1,10 @@
 import React from 'react';
 
-class InputFile extends React.Component<{ valid: boolean }> {
-  constructor(props: { valid: boolean }) {
+class InputFile extends React.Component<{
+  valid: boolean;
+  fileRef: React.RefObject<HTMLInputElement>;
+}> {
+  constructor(props: { valid: boolean; fileRef: React.RefObject<HTMLInputElement> }) {
     super(props);
   }
 
@@ -9,8 +12,8 @@ class InputFile extends React.Component<{ valid: boolean }> {
     return (
       <div>
         <div>img:</div>
-        <input type="file" name="inputFile" />
-        {this.props.valid ? <div></div> : <div>ERROR</div>}
+        <input type="file" name="inputFile" accept="image/*" ref={this.props.fileRef} />
+        {this.props.valid ? <div></div> : <div>Choose image file</div>}
       </div>
     );
   }
