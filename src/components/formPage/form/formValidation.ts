@@ -1,14 +1,13 @@
-import { IFormState } from './form';
 import { inputCheckboxValidation } from '../inputCheckbox/inputCheckboxValidation';
 import { inputDateValidation } from '../inputDate/inputDateValidations';
 import { inputFileValidation } from '../inputFile/inputFileValidation';
 import { inputNameValidation } from '../inputName/inputNameValidation';
 import { inputRadioValidation } from '../inputRadio/inputRadioValidation';
 import { selectCityValidation } from '../selectCity/selectCityValidation';
-import { IFormDate } from '../formData/formData';
+import { IFormData, IFormValid } from './formPage';
 
-export function formPageValidatoin(currentData: IFormDate): IFormState {
-  const validObject: IFormState = {
+export function formPageValidatoin(currentData: IFormData): IFormValid {
+  const validObject: IFormValid = {
     nameValid: inputNameValidation(currentData.name),
     dateValid: inputDateValidation(currentData.date),
     cityValid: selectCityValidation(currentData.city),

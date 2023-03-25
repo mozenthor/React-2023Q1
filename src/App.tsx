@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import About from './components/about/about';
 import Home from './components/homePage/HomePage';
 import Header from './components/header/header';
-import FormPage from './components/formPage/form/form';
+import FormPage from './components/formPage/form/formPage';
 
 function App() {
   return (

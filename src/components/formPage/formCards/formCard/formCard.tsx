@@ -1,9 +1,9 @@
-import { IFormDate } from 'components/formPage/formData/formData';
+import { IFormData } from 'components/formPage/form/formPage';
 import React from 'react';
 import './formCard.scss';
 
-class FormCard extends React.Component<{ data: IFormDate }> {
-  constructor(props: { data: IFormDate }) {
+class FormCard extends React.Component<{ data: IFormData }> {
+  constructor(props: { data: IFormData }) {
     super(props);
   }
   render() {

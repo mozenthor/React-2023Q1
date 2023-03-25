@@ -1,16 +1,16 @@
 import React from 'react';
-import { IFormDate } from '../formData/formData';
+import { IFormData } from '../form/formPage';
 import FormCard from './formCard/formCard';
 
-class FormCardsWrapper extends React.Component<{ data: IFormDate[] }> {
-  constructor(props: { data: IFormDate[] }) {
+class FormCardsWrapper extends React.Component<{ data: IFormData[] }> {
+  constructor(props: { data: IFormData[] }) {
     super(props);
   }
   render() {
     return (
       <div className="cards_wrapper">
-        {this.props.data.map((card) => (
-          <FormCard key={card.name} data={card} />
+        {this.props.data.map((card, index) => (
+          <FormCard key={index} data={card} />
         ))}
       </div>
     );
