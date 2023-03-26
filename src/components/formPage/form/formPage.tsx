@@ -7,6 +7,7 @@ import InputName from '../inputName/inputName';
 import InputRadio from '../inputRadio/inputRadio';
 import SelectCity from '../selectCity/selectCity';
 import FormCardsWrapper from '../formCards/formCardsWrapper';
+import './formPage.scss';
 
 class FormPage extends React.Component<object> {
   state: { valid: IFormValid; data: IFormData[] };
@@ -68,8 +69,8 @@ class FormPage extends React.Component<object> {
 
   render() {
     return (
-      <div>
-        <form ref={this.formRef} onSubmit={this.onSubmit}>
+      <div className="formPage_wrapper">
+        <form className="formPage_form" ref={this.formRef} onSubmit={this.onSubmit}>
           <InputName valid={this.state.valid.nameValid} nameRef={this.nameRef} />
           <InputDate valid={this.state.valid.dateValid} dateRef={this.dateRef} />
           <SelectCity valid={this.state.valid.cityValid} cityRef={this.cityRef} />
@@ -78,9 +79,9 @@ class FormPage extends React.Component<object> {
             radioRefMale={this.radioRefMale}
             radioRefFemale={this.radioRefFemale}
           />
-          <InputCheckbox valid={this.state.valid.checkboxValid} checkboxRef={this.checkboxRef} />
           <InputFile valid={this.state.valid.fileRef} fileRef={this.fileRef} />
-          <input type="submit" value="Submit" />
+          <InputCheckbox valid={this.state.valid.checkboxValid} checkboxRef={this.checkboxRef} />
+          <input className="input_submit" type="submit" value="Submit" />
         </form>
         <FormCardsWrapper data={this.state.data} />
       </div>

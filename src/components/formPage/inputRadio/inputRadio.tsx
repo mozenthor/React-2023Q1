@@ -1,4 +1,5 @@
 import React from 'react';
+import './inputRadio.scss';
 
 class InputRadio extends React.Component<{
   valid: boolean;
@@ -15,27 +16,37 @@ class InputRadio extends React.Component<{
 
   render() {
     return (
-      <div>
-        <div>Male/Female:</div>
-        <div>
-          <input
-            type="radio"
-            id="male"
-            value="Male"
-            name="inputRadio"
-            ref={this.props.radioRefMale}
-          />
-          <label htmlFor="male">Male</label>
-          <input
-            type="radio"
-            id="female"
-            value="Female"
-            name="inputRadio"
-            ref={this.props.radioRefFemale}
-          />
-          <label htmlFor="female">Female</label>
+      <div className="inputRadio_wrapper">
+        <div>Gender:</div>
+        <div className="inputRadio_container">
+          <label>
+            <input
+              className="inputRadio_item"
+              type="radio"
+              id="male"
+              value="Male"
+              name="inputRadio"
+              ref={this.props.radioRefMale}
+            />
+            Male
+          </label>
+          <label>
+            <input
+              className="inputRadio_item"
+              type="radio"
+              id="female"
+              value="Female"
+              name="inputRadio"
+              ref={this.props.radioRefFemale}
+            />
+            Female
+          </label>
         </div>
-        {this.props.valid ? <div></div> : <div>Choose one of the options</div>}
+        {this.props.valid ? (
+          <div className="inputRadio_error"></div>
+        ) : (
+          <div className="inputRadio_error">Choose one of the options</div>
+        )}
       </div>
     );
   }

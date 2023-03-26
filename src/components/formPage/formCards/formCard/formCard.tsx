@@ -8,24 +8,25 @@ class FormCard extends React.Component<{ data: IFormData }> {
   }
   render() {
     return (
-      <div className="card_wrapper">
-        <div className="card_name">{this.props.data.name}</div>
-        <div className="card_image_wrapper">
+      <div className="formCard_container ">
+        <div className="formCard_name">{this.props.data.name}</div>
+        <div className="formCard_image_wrapper">
           <img
-            className="card_image"
+            className="formCard_image"
             src={URL.createObjectURL(this.props.data.image as Blob | MediaSource)}
             alt=""
           />
         </div>
-        <ul>
-          <li>
-            <span className="card_description_item_bold">Birthday: </span> {this.props.data.date}
+        <ul className="formCard_description_wrapper">
+          <li className="formCard_description_item">
+            <span className="formCard_description_item_bold">Birthday: </span>{' '}
+            {this.props.data.date}
           </li>
-          <li>
-            <span className="card_description_item_bold">City: </span> {this.props.data.city}
+          <li className="formCard_description_item">
+            <span className="formCard_description_item_bold">City: </span> {this.props.data.city}
           </li>
-          <li>
-            <span className="card_description_item_bold">Gender: </span> {this.props.data.radio}
+          <li className="formCard_description_item">
+            <span className="formCard_description_item_bold">Gender: </span> {this.props.data.radio}
           </li>
         </ul>
       </div>

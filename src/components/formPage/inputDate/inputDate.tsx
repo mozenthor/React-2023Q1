@@ -1,4 +1,5 @@
 import React from 'react';
+import './inputDate.scss';
 
 class InputDate extends React.Component<{
   valid: boolean;
@@ -10,10 +11,14 @@ class InputDate extends React.Component<{
 
   render() {
     return (
-      <div>
-        <div>Birthday</div>
-        <input type="date" name="inputDate" ref={this.props.dateRef} />
-        {this.props.valid ? <div></div> : <div>Choose correct date</div>}
+      <div className="inputDate_wrapper">
+        <div>Birthday:</div>
+        <input type="date" name="inputDate" ref={this.props.dateRef} className="inputDate_input" />
+        {this.props.valid ? (
+          <div className="inputDate_error"></div>
+        ) : (
+          <div className="inputDate_error">Choose correct date</div>
+        )}
       </div>
     );
   }

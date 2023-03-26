@@ -1,0 +1,38 @@
+.formCard_image {
+  max-width: 180px;
+}
+
+.formCard_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 2px;
+  border-color: rgb(18, 122, 74);
+  border-radius: 5px;
+  padding: 20px 30px;
+  width: 200px;
+  height: 400px;
+}
+
+.formCard_name {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.formCard_description_wrapper{
+  padding: 0;
+  margin: 0;
+  text-align: start;
+  min-width: 80%;
+}
+
+.formCard_description_item {
+  list-style: none;
+  padding: 0;
+}
+
+.formCard_description_item_bold {
+  font-weight: 550;
+}

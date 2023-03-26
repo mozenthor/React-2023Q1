@@ -1,4 +1,5 @@
 import React from 'react';
+import './inputFile.scss';
 
 class InputFile extends React.Component<{
   valid: boolean;
@@ -10,10 +11,14 @@ class InputFile extends React.Component<{
 
   render() {
     return (
-      <div>
-        <div>img:</div>
+      <div className="inputFile_wrapper">
+        <div>Image:</div>
         <input type="file" name="inputFile" accept="image/*" ref={this.props.fileRef} />
-        {this.props.valid ? <div></div> : <div>Choose image file</div>}
+        {this.props.valid ? (
+          <div className="inputFile_error"></div>
+        ) : (
+          <div className="inputFile_error">Choose image file</div>
+        )}
       </div>
     );
   }

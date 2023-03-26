@@ -1,4 +1,5 @@
 import React from 'react';
+import './inputCheckbox.scss';
 
 class InputCheckbox extends React.Component<{
   valid: boolean;
@@ -10,7 +11,7 @@ class InputCheckbox extends React.Component<{
 
   render() {
     return (
-      <div>
+      <div className="inputCheckbox_wrapper">
         <input
           type="checkbox"
           id="personalData"
@@ -18,7 +19,11 @@ class InputCheckbox extends React.Component<{
           ref={this.props.checkboxRef}
         />
         <label htmlFor="personalData">I consent to my personal data</label>
-        {this.props.valid ? <div></div> : <div>Please give consent</div>}
+        {this.props.valid ? (
+          <div className="inputCheckbox_error"></div>
+        ) : (
+          <div className="inputCheckbox_error">Please give consent</div>
+        )}
       </div>
     );
   }
