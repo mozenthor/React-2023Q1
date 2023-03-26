@@ -8,9 +8,10 @@ import InputRadio from '../inputRadio/inputRadio';
 import SelectCity from '../selectCity/selectCity';
 import FormCardsWrapper from '../formCards/formCardsWrapper';
 import './formPage.scss';
+import Successfully from '../successfully/successfully';
 
 class FormPage extends React.Component<object> {
-  state: { valid: IFormValid; data: IFormData[] };
+  state: { valid: IFormValid; data: IFormData[]; successfully: boolean };
   nameRef = React.createRef<HTMLInputElement>();
   dateRef = React.createRef<HTMLInputElement>();
   cityRef = React.createRef<HTMLSelectElement>();
@@ -31,6 +32,7 @@ class FormPage extends React.Component<object> {
         fileRef: true,
       },
       data: [],
+      successfully: false,
     };
   }
   currentData: IFormData = {
@@ -62,7 +64,7 @@ class FormPage extends React.Component<object> {
     this.getCurrentData();
     this.setState({ valid: formPageValidatoin(this.currentData) });
     if (!Object.values(formPageValidatoin(this.currentData)).includes(false)) {
-      this.setState({ data: [...this.state.data, { ...this.currentData }] });
+      this.setState({ data: [...this.state.data, { ...this.currentData }], successfully: true });
       this.formRef.current?.reset();
     }
   };
@@ -84,6 +86,9 @@ class FormPage extends React.Component<object> {
           <input className="input_submit" type="submit" value="Submit" />
         </form>
         <FormCardsWrapper data={this.state.data} />
+        {this.state.successfully && (
+          <Successfully onAnimationEnd={() => this.setState({ successfully: false })} />
+        )}
       </div>
     );
   }
