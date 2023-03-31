@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import './formPage.scss';
 import { useForm } from 'react-hook-form';
 import { formPageValidatoin } from './formValidation';
+import FormCardsWrapper from '../formCards/formCardsWrapper';
+import Successfully from '../successfully/successfully';
 
 function FormPage() {
-  const { register, handleSubmit } = useForm<IFormData>();
+  const { register, handleSubmit, reset } = useForm<IFormData>();
   const [valuesValid, setValuesValid] = useState({
     nameValid: true,
     dateValid: true,
@@ -13,11 +15,15 @@ function FormPage() {
     checkboxValid: true,
     fileValid: true,
   });
+  const [cardData, setCardData] = useState<IFormData[]>([]);
+  const [success, setSuccess] = useState(false);
 
   const onSubmit = (data: IFormData) => {
     setValuesValid(formPageValidatoin(data));
     if (!Object.values(formPageValidatoin(data)).includes(false)) {
-      console.log('success');
+      setCardData([...cardData, { ...data, img: URL.createObjectURL(data.inputFile[0]) }]);
+      setSuccess(true);
+      reset();
     }
   };
 
@@ -115,10 +121,8 @@ function FormPage() {
         </div>
         <input className="input_submit" type="submit" value="Submit" />
       </form>
-      {/* <FormCardsWrapper data={this.state.data} />
-      {this.state.successfully && (
-        <Successfully onAnimationEnd={() => this.setState({ successfully: false })} />
-      )} */}
+      <FormCardsWrapper data={cardData} />
+      {success && <Successfully onAnimationEnd={() => setSuccess(false)} />}
     </div>
   );
 }
@@ -139,6 +143,7 @@ export interface IFormData {
   inputRadio: string | undefined;
   inputCheckbox: boolean | undefined;
   inputFile: FileList;
+  img?: string;
 }
 
 export default FormPage;
