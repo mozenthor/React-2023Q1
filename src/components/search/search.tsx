@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import './search.scss';
 
-function Search() {
+interface ISearchValue {
+  setSearchValue?: Dispatch<SetStateAction<string>>;
+}
+
+function Search({ setSearchValue }: ISearchValue) {
   const [value, setValue] = useState(localStorage.getItem('search') || '');
   const searchRef = useRef(value);
 
@@ -16,14 +20,23 @@ function Search() {
     };
   }, []);
 
+  const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (setSearchValue && (event.code === 'Enter' || event.code === 'NumpadEnter')) {
+      setSearchValue(value);
+    }
+  };
+
   return (
-    <input
-      className="search_input"
-      type="text"
-      placeholder="search.."
-      value={value}
-      onChange={handleChangeValue}
-    ></input>
+    <>
+      <input
+        className="search_input"
+        type="text"
+        placeholder="search.."
+        value={value}
+        onChange={handleChangeValue}
+        onKeyDown={keyPressHandler}
+      ></input>
+    </>
   );
 }
 

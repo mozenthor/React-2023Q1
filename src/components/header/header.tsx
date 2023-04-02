@@ -8,7 +8,7 @@ class Header extends React.Component {
     return (
       <>
         <div className="header">
-          <h1>Phone store</h1>
+          <h1>Photo store</h1>
           <Navigation></Navigation>
         </div>
         <Outlet />
