@@ -21,7 +21,7 @@ function Search({ setSearchValue }: ISearchValue) {
   }, []);
 
   const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (setSearchValue && (event.code === 'Enter' || event.code === 'NumpadEnter')) {
+    if (setSearchValue && (event.code === 'Enter' || event.code === 'NumpadEnt')) {
       setSearchValue(value);
     }
   };
