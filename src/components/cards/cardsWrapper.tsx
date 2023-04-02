@@ -16,7 +16,7 @@ function CardsWrapper(props: { searchValue: string }) {
       .getPhotos({
         query: searchValue,
         page: 1,
-        perPage: 8,
+        perPage: 10,
         orientation: 'portrait',
       })
       .then((data) => {

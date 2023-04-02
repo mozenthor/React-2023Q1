@@ -7,6 +7,7 @@ export function Card(props: { data: Basic }) {
 
   const toggleModalWindowActiv = () => {
     setModalWindowActiv(!modalWindowActiv);
+    console.log(props.data);
   };
 
   return (
