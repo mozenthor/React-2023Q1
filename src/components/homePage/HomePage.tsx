@@ -9,7 +9,7 @@ function Home() {
   return (
     <div>
       <div className="home_wrapper">
-        <Search setSearchValue={setSearchValue}></Search>
+        <Search setStateFunction={setSearchValue}></Search>
         <CardsWrapper searchValue={searchValue}></CardsWrapper>
       </div>
     </div>

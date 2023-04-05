@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import './search.scss';
 
-interface ISearchValue {
-  setSearchValue?: Dispatch<SetStateAction<string>>;
+interface ISetStateFunction {
+  setStateFunction?: Dispatch<SetStateAction<string>>;
 }
 
-function Search({ setSearchValue }: ISearchValue) {
+function Search({ setStateFunction }: ISetStateFunction) {
   const [value, setValue] = useState(localStorage.getItem('search') || '');
   const searchRef = useRef(value);
 
@@ -21,8 +21,8 @@ function Search({ setSearchValue }: ISearchValue) {
   }, []);
 
   const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (setSearchValue && (event.code === 'Enter' || event.code === 'NumpadEnt')) {
-      setSearchValue(value);
+    if (setStateFunction && (event.code === 'Enter' || event.code === 'NumpadEnt')) {
+      setStateFunction(value);
     }
   };
 

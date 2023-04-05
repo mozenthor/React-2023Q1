@@ -5,7 +5,7 @@ import { ApiResponse } from 'unsplash-js/dist/helpers/response';
 import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 import Card from './card/card';
 
-const api = createApi({ accessKey: 'OzgE6QPO7RH3oq2108ldsgvWdER1bK8dRajf5L5OXa0' });
+export const api = createApi({ accessKey: 'OzgE6QPO7RH3oq2108ldsgvWdER1bK8dRajf5L5OXa0' });
 
 function CardsWrapper(props: { searchValue: string }) {
   const [data, setData] = useState<ApiResponse<Photos> | null>(null);
