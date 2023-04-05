@@ -11,18 +11,20 @@ export function Card(props: { data: Basic }) {
   };
 
   return (
-    <div className="card_container">
-      <div className="card_image_wrapper" onClick={toggleModalWindowActiv}>
-        <img className="card_image" src={props.data.urls.small} alt="" />
+    <div>
+      <div className="card_container" onClick={toggleModalWindowActiv}>
+        <div className="card_image_wrapper">
+          <img className="card_image" src={props.data.urls.small} alt="" />
+        </div>
+        <ul className="card_description_wrapper">
+          <li className="card_description_item">
+            <span className="card_description_item_bold">Name: </span> {props.data.user.name}
+          </li>
+          <li className="card_description_item">
+            <span className="card_description_item_bold">Likes: </span> {props.data.likes}
+          </li>
+        </ul>
       </div>
-      <ul className="card_description_wrapper">
-        <li className="card_description_item">
-          <span className="card_description_item_bold">Name: </span> {props.data.user.name}
-        </li>
-        <li className="card_description_item">
-          <span className="card_description_item_bold">Likes: </span> {props.data.likes}
-        </li>
-      </ul>
       {modalWindowActiv && (
         <ModalWindow id={props.data.id} toggleModalWindow={toggleModalWindowActiv}></ModalWindow>
       )}

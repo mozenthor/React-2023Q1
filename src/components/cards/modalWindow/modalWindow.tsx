@@ -16,7 +16,8 @@ function ModalWindow(props: { id: string; toggleModalWindow: () => void }) {
       })
       .then((data) => {
         setData(data);
-      });
+      })
+      .catch((err) => console.log(err));
   }, [props.id]);
 
   if (!data) {

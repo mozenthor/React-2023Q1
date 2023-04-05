@@ -21,7 +21,8 @@ function CardsWrapper(props: { searchValue: string }) {
       })
       .then((data) => {
         setData(data);
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
