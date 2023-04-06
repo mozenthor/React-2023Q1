@@ -40,13 +40,6 @@ test('render image cards', async () => {
   await waitFor(() => expect(screen.getByText('Alice Triquet')));
 });
 
-// test('render modal window', async () => {
-//   render(<CardsWrapper searchValue="lake" />);
-//   const card = screen.getByText('Alice Triquet');
-//   await userEvent.click(card);
-//   await waitFor(() => expect(screen.getByText('Size: 3648x5472')));
-// });
-
 test('render modal window', async () => {
   render(<CardsWrapper searchValue="lake" />);
   await waitFor(async () => {
