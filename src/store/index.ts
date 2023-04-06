@@ -1,10 +1,13 @@
-import { combineReducers, createStore } from '@reduxjs/toolkit';
-import { SearchValueReducer } from './searchValueReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import searcValueReducer from './searchValueSlice';
+import fetchPhotos from './fetchPhotosSlice';
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-const rootReducer = combineReducers({
-  search: SearchValueReducer,
+export const store = configureStore({
+  reducer: {
+    searchValue: searcValueReducer,
+    photos: fetchPhotos,
+  },
 });
-
-export const store = createStore(rootReducer);

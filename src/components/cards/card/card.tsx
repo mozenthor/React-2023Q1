@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './card.scss';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
-import ModalWindow from '../modalWindow/modalWindow';
+// import ModalWindow from '../modalWindow/modalWindow';
 
 export function Card(props: { data: Basic }) {
   const [modalWindowActiv, setModalWindowActiv] = useState(false);
@@ -25,9 +25,9 @@ export function Card(props: { data: Basic }) {
           </li>
         </ul>
       </div>
-      {modalWindowActiv && (
+      {/* {modalWindowActiv && (
         <ModalWindow id={props.data.id} toggleModalWindow={toggleModalWindowActiv}></ModalWindow>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,27 +1,30 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './search.scss';
+import { AppDispatch, RootState } from 'store';
+import { setSearchValue } from '../../store/searchValueSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { fetchPhotos } from '../../store/fetchPhotosSlice';
 
-interface ISetStateFunction {
-  setStateFunction?: Dispatch<SetStateAction<string>>;
-}
-
-function Search({ setStateFunction }: ISetStateFunction) {
-  const searchValue = useSelector((state: RootState) => state.search.searchValue);
+function Search() {
+  const searchValue = useSelector((state: RootState) => state.searchValue.searchValue);
   const [value, setValue] = useState(searchValue);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    dispatch({ type: 'setSearchValue', searchValue: event.target.value });
   };
 
   const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (setStateFunction && (event.code === 'Enter' || event.code === 'NumpadEnt')) {
-      setStateFunction(value);
+    if (event.code === 'Enter' || event.code === 'NumpadEnt') {
+      dispatch(setSearchValue({ searchValue: value }));
     }
   };
+
+  useEffect(() => {
+    if (searchValue) {
+      dispatch(fetchPhotos({ searchValue: searchValue }));
+    }
+  }, [dispatch, searchValue]);
 
   return (
     <>
