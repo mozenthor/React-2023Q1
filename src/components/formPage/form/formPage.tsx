@@ -1,97 +1,130 @@
-import React from 'react';
-import { formPageValidatoin } from './formValidation';
-import InputCheckbox from '../inputCheckbox/inputCheckbox';
-import InputDate from '../inputDate/inputDate';
-import InputFile from '../inputFile/inputFile';
-import InputName from '../inputName/inputName';
-import InputRadio from '../inputRadio/inputRadio';
-import SelectCity from '../selectCity/selectCity';
-import FormCardsWrapper from '../formCards/formCardsWrapper';
+import React, { useState } from 'react';
 import './formPage.scss';
+import { useForm } from 'react-hook-form';
+import { formPageValidatoin } from './formValidation';
+import FormCardsWrapper from '../formCards/formCardsWrapper';
 import Successfully from '../successfully/successfully';
 
-class FormPage extends React.Component<object> {
-  state: { valid: IFormValid; data: IFormData[]; successfully: boolean };
-  nameRef = React.createRef<HTMLInputElement>();
-  dateRef = React.createRef<HTMLInputElement>();
-  cityRef = React.createRef<HTMLSelectElement>();
-  checkboxRef = React.createRef<HTMLInputElement>();
-  radioRefMale = React.createRef<HTMLInputElement>();
-  radioRefFemale = React.createRef<HTMLInputElement>();
-  fileRef = React.createRef<HTMLInputElement>();
-  formRef = React.createRef<HTMLFormElement>();
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      valid: {
-        nameValid: true,
-        dateValid: true,
-        cityValid: true,
-        radioValid: true,
-        checkboxValid: true,
-        fileRef: true,
-      },
-      data: [],
-      successfully: false,
-    };
-  }
-  currentData: IFormData = {
-    name: '',
-    date: '',
-    city: '',
-    radio: '',
-    checkbox: false,
-    image: null,
-  };
+function FormPage() {
+  const { register, handleSubmit, reset } = useForm<IFormData>();
+  const [valuesValid, setValuesValid] = useState({
+    nameValid: true,
+    dateValid: true,
+    cityValid: true,
+    radioValid: true,
+    checkboxValid: true,
+    fileValid: true,
+  });
+  const [cardData, setCardData] = useState<IFormData[]>([]);
+  const [success, setSuccess] = useState(false);
 
-  getCurrentData = () => {
-    this.currentData.name = this.nameRef.current?.value;
-    this.currentData.date = this.dateRef.current?.value;
-    this.currentData.city = this.cityRef.current?.value;
-    this.currentData.checkbox = this.checkboxRef.current?.checked;
-    this.currentData.radio = this.radioCheck();
-    this.currentData.image = this.fileRef.current?.files?.[0];
-  };
-
-  radioCheck = () => {
-    if (this.radioRefMale.current?.checked) return this.radioRefMale.current?.value;
-    if (this.radioRefFemale.current?.checked) return this.radioRefFemale.current?.value;
-    else return '';
-  };
-
-  onSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    this.getCurrentData();
-    this.setState({ valid: formPageValidatoin(this.currentData) });
-    if (!Object.values(formPageValidatoin(this.currentData)).includes(false)) {
-      this.setState({ data: [...this.state.data, { ...this.currentData }], successfully: true });
-      this.formRef.current?.reset();
+  const onSubmit = (data: IFormData) => {
+    setValuesValid(formPageValidatoin(data));
+    if (!Object.values(formPageValidatoin(data)).includes(false)) {
+      setCardData([...cardData, { ...data, img: URL.createObjectURL(data.inputFile[0]) }]);
+      setSuccess(true);
+      reset();
     }
   };
 
-  render() {
-    return (
-      <div className="formPage_wrapper">
-        <form className="formPage_form" ref={this.formRef} onSubmit={this.onSubmit}>
-          <InputName valid={this.state.valid.nameValid} nameRef={this.nameRef} />
-          <InputDate valid={this.state.valid.dateValid} dateRef={this.dateRef} />
-          <SelectCity valid={this.state.valid.cityValid} cityRef={this.cityRef} />
-          <InputRadio
-            valid={this.state.valid.radioValid}
-            radioRefMale={this.radioRefMale}
-            radioRefFemale={this.radioRefFemale}
+  return (
+    <div className="formPage_wrapper">
+      <form className="formPage_form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="inputName_wrapper">
+          <div>Name:</div>
+          <input
+            type="text"
+            className="inputName_input"
+            {...register('inputName')}
+            autoComplete="off"
           />
-          <InputFile valid={this.state.valid.fileRef} fileRef={this.fileRef} />
-          <InputCheckbox valid={this.state.valid.checkboxValid} checkboxRef={this.checkboxRef} />
-          <input className="input_submit" type="submit" value="Submit" />
-        </form>
-        <FormCardsWrapper data={this.state.data} />
-        {this.state.successfully && (
-          <Successfully onAnimationEnd={() => this.setState({ successfully: false })} />
-        )}
-      </div>
-    );
-  }
+          {valuesValid.nameValid ? (
+            <div className="inputName_error"></div>
+          ) : (
+            <div className="inputName_error">Name length required 3-16 characters</div>
+          )}
+        </div>
+        <div className="inputDate_wrapper">
+          <div>Birthday:</div>
+          <input type="date" className="inputDate_input" {...register('inputDate')} />
+          {valuesValid.dateValid ? (
+            <div className="inputDate_error"></div>
+          ) : (
+            <div className="inputDate_error">Choose correct date</div>
+          )}
+        </div>
+
+        <div className="selectCity_wrapper">
+          <div>City:</div>
+          <select id="city" className="selectCity_select" {...register('selectCity')}>
+            <option value="" hidden></option>
+            <option value="Minsk">Minsk</option>
+            <option value="Brest">Brest</option>
+            <option value="Gomel">Gomel</option>
+            <option value="Grodno">Grodno</option>
+            <option value="Vitebsk">Vitebsk</option>
+            <option value="Mogilev">Mogilev</option>
+          </select>
+          {valuesValid.cityValid ? (
+            <div className="selectCity_error"></div>
+          ) : (
+            <div className="selectCity_error">Choose your city</div>
+          )}
+        </div>
+        <div className="inputRadio_wrapper">
+          <div>Gender:</div>
+          <div className="inputRadio_container">
+            <label>
+              <input
+                className="inputRadio_item"
+                type="radio"
+                id="male"
+                value="Male"
+                {...register('inputRadio')}
+              />
+              Male
+            </label>
+            <label>
+              <input
+                className="inputRadio_item"
+                type="radio"
+                id="female"
+                value="Female"
+                {...register('inputRadio')}
+              />
+              Female
+            </label>
+          </div>
+          {valuesValid.radioValid ? (
+            <div className="inputRadio_error"></div>
+          ) : (
+            <div className="inputRadio_error">Choose one of the options</div>
+          )}
+        </div>
+        <div className="inputFile_wrapper">
+          <div>Image:</div>
+          <input type="file" accept="image/*" {...register('inputFile')} />
+          {valuesValid.fileValid ? (
+            <div className="inputFile_error"></div>
+          ) : (
+            <div className="inputFile_error">Choose image file</div>
+          )}
+        </div>
+        <div className="inputCheckbox_wrapper">
+          <input type="checkbox" id="personalData" {...register('inputCheckbox')} />
+          <label htmlFor="personalData">I consent to my personal data</label>
+          {valuesValid.checkboxValid ? (
+            <div className="inputCheckbox_error"></div>
+          ) : (
+            <div className="inputCheckbox_error">Please give consent</div>
+          )}
+        </div>
+        <input className="input_submit" type="submit" value="Submit" />
+      </form>
+      <FormCardsWrapper data={cardData} />
+      {success && <Successfully onAnimationEnd={() => setSuccess(false)} />}
+    </div>
+  );
 }
 
 export interface IFormValid {
@@ -100,16 +133,17 @@ export interface IFormValid {
   cityValid: boolean;
   radioValid: boolean;
   checkboxValid: boolean;
-  fileRef: boolean;
+  fileValid: boolean;
 }
 
 export interface IFormData {
-  name: string | undefined;
-  date: string | undefined;
-  city: string | undefined;
-  radio: string | undefined;
-  checkbox: boolean | undefined;
-  image: File | undefined | null;
+  inputName: string | undefined;
+  inputDate: string | undefined;
+  selectCity: string | undefined;
+  inputRadio: string | undefined;
+  inputCheckbox: boolean | undefined;
+  inputFile: FileList;
+  img?: string;
 }
 
 export default FormPage;
