@@ -1,4 +1,4 @@
-import { IFormData, IFormValid } from './formPage';
+import { IFormData, IFormValid } from '../../../store/formSlice';
 
 export function formPageValidatoin(currentData: IFormData): IFormValid {
   const validObject: IFormValid = {
@@ -7,7 +7,7 @@ export function formPageValidatoin(currentData: IFormData): IFormValid {
     cityValid: selectCityValidation(currentData.selectCity),
     radioValid: inputRadioValidation(currentData.inputRadio),
     checkboxValid: inputCheckboxValidation(currentData.inputCheckbox),
-    fileValid: inputFileValidation(currentData.inputFile),
+    fileValid: inputFileValidation(currentData.inputFile!),
   };
   return validObject;
 }

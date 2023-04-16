@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './formPage.scss';
 import { useForm } from 'react-hook-form';
-import { formPageValidatoin } from './formValidation';
 import FormCardsWrapper from '../formCards/formCardsWrapper';
 import Successfully from '../successfully/successfully';
+import { IFormData, setCardData, setSuccess, setValuesValid } from '../../../store/formSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'store';
+import { formPageValidatoin } from './formValidation';
 
 function FormPage() {
   const { register, handleSubmit, reset } = useForm<IFormData>();
-  const [valuesValid, setValuesValid] = useState({
-    nameValid: true,
-    dateValid: true,
-    cityValid: true,
-    radioValid: true,
-    checkboxValid: true,
-    fileValid: true,
-  });
-  const [cardData, setCardData] = useState<IFormData[]>([]);
-  const [success, setSuccess] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const valuesValid = useSelector((state: RootState) => state.form.valuesValid);
+  const success = useSelector((state: RootState) => state.form.success);
 
   const onSubmit = (data: IFormData) => {
-    setValuesValid(formPageValidatoin(data));
+    dispatch(setValuesValid({ valuesValid: formPageValidatoin(data) }));
     if (!Object.values(formPageValidatoin(data)).includes(false)) {
-      setCardData([...cardData, { ...data, img: URL.createObjectURL(data.inputFile[0]) }]);
-      setSuccess(true);
+      dispatch(
+        setCardData({
+          data: { ...data, img: URL.createObjectURL(data.inputFile![0]), inputFile: null },
+        })
+      );
+      dispatch(setSuccess(true));
       reset();
     }
   };
@@ -121,29 +121,10 @@ function FormPage() {
         </div>
         <input className="input_submit" type="submit" value="Submit" />
       </form>
-      <FormCardsWrapper data={cardData} />
+      <FormCardsWrapper />
       {success && <Successfully onAnimationEnd={() => setSuccess(false)} />}
     </div>
   );
-}
-
-export interface IFormValid {
-  nameValid: boolean;
-  dateValid: boolean;
-  cityValid: boolean;
-  radioValid: boolean;
-  checkboxValid: boolean;
-  fileValid: boolean;
-}
-
-export interface IFormData {
-  inputName: string | undefined;
-  inputDate: string | undefined;
-  selectCity: string | undefined;
-  inputRadio: string | undefined;
-  inputCheckbox: boolean | undefined;
-  inputFile: FileList;
-  img?: string;
 }
 
 export default FormPage;

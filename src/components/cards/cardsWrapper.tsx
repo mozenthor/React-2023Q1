@@ -3,8 +3,10 @@ import Card from './card/card';
 import { RootState } from 'store';
 import { useSelector } from 'react-redux';
 import React from 'react';
+import ModalWindow from './modalWindow/modalWindow';
 
 function CardsWrapper() {
+  const modalWindowActive = useSelector((state: RootState) => state.photoById.modalWindowActive);
   const { photos, status } = useSelector((state: RootState) => state.photos);
 
   return (
@@ -19,6 +21,7 @@ function CardsWrapper() {
           ))}
         </div>
       )}
+      {modalWindowActive && <ModalWindow></ModalWindow>}
     </div>
   );
 }
