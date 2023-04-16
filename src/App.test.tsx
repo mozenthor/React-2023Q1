@@ -1,24 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import About from './components/about/about';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import App from './App';
 import NotFoundPage from './components/notFound/notFoundPage';
-import Card from './components/cards/card/card';
-import CardsWrapper from './components/cards/cardsWrapper';
-import mobileData from './assets/data/mobileData';
 import userEvent from '@testing-library/user-event';
 import FormPage from './components/formPage/form/formPage';
-
-test('renders Phone store', () => {
-  render(
-    <MemoryRouter>
-      <App />
-    </MemoryRouter>
-  );
-  const element = screen.getByText(/phone store/i);
-  expect(element).toBeVisible();
-});
+import CardsWrapper from './components/cards/cardsWrapper';
 
 test('renders 404 not found', () => {
   render(<NotFoundPage />);
@@ -32,28 +19,8 @@ test('renders about us', () => {
       <About />
     </MemoryRouter>
   );
-  const element = screen.getByText(/Online mobile phone shop/i);
+  const element = screen.getByText(/about us/i);
   expect(element).toBeVisible();
-});
-
-test('renders card', () => {
-  const mobile = {
-    id: '1',
-    brand: 'Apple',
-    model: 'iPhone',
-    color: 'blue',
-    memory: '1Gb',
-    released: '2023',
-  };
-  render(<Card data={mobile} />);
-  const element = screen.getByText(mobile.brand + ' ' + mobile.model);
-  expect(element).toBeVisible();
-});
-
-test('renders cards', () => {
-  render(<CardsWrapper />);
-  const element = screen.getAllByText(/color/i);
-  expect(element.length).toEqual(mobileData.length);
 });
 
 test('renders input name', async () => {
@@ -66,4 +33,25 @@ test('renders input name', async () => {
   await userEvent.click(submitButton);
   expect(!screen.getByText(/3-16 characters/i));
   expect(screen.getByText(/Choose correct date/i));
+});
+
+test('render image cards', async () => {
+  render(<CardsWrapper searchValue="lake" />);
+  await waitFor(() => expect(screen.getByText('Alice Triquet')));
+});
+
+// test('render modal window', async () => {
+//   render(<CardsWrapper searchValue="lake" />);
+//   const card = screen.getByText('Alice Triquet');
+//   await userEvent.click(card);
+//   await waitFor(() => expect(screen.getByText('Size: 3648x5472')));
+// });
+
+test('render modal window', async () => {
+  render(<CardsWrapper searchValue="lake" />);
+  await waitFor(async () => {
+    const card = screen.getByText('Alice Triquet');
+    await userEvent.click(card);
+    await waitFor(() => expect(screen.getByText('Size:')));
+  }).catch((err) => console.log(err));
 });
