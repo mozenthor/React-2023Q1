@@ -1,74 +1,75 @@
-import { useEffect, useState } from 'react';
-import { api } from '../cardsWrapper';
-import React from 'react';
-import { ApiResponse } from 'unsplash-js/dist/helpers/response';
-import { Full } from 'unsplash-js/dist/methods/photos/types';
+import React, { useEffect } from 'react';
 import '../card/card.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'store';
+import { fetchPhotoById, toggleModalWindow } from '../../../store/fetchPhotoById';
 
-function ModalWindow(props: { id: string; toggleModalWindow: () => void }) {
-  const [data, setData] = useState<ApiResponse<Full> | null>(null);
+function ModalWindow() {
+  const { photo, status, id } = useSelector((state: RootState) => state.photoById);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const toggle = () => {
+    dispatch(toggleModalWindow());
+  };
 
   useEffect(() => {
-    setData(null);
-    api.photos
-      .get({
-        photoId: props.id,
-      })
-      .then((data) => {
-        setData(data);
-      })
-      .catch((err) => console.log(err));
-  }, [props.id]);
-
-  if (!data) {
-    return (
-      <div className="modal_window_wrapper">
-        <div className="modal_window_container">
-          <div className="modal_window_loading">LOADING...</div>
-        </div>
-        <div className="modal_window_background"></div>
-      </div>
-    );
-  }
+    dispatch(fetchPhotoById(id));
+  }, [dispatch, id]);
 
   return (
-    <div className="modal_window_wrapper">
-      <div className="modal_window_container">
-        <div className="modal_window_image_wrapper">
-          <img className="modal_window_image" src={data.response?.urls.small} alt="" />
+    <>
+      {status === 'loading' && (
+        <div className="modal_window_wrapper">
+          <div className="modal_window_container">
+            <div className="modal_window_loading">LOADING...</div>
+            <div className="modal_window_close_button" onClick={toggle}>
+              X
+            </div>
+          </div>
+          <div className="modal_window_background" onClick={toggle}></div>
         </div>
-        <ul className="modal_window_description_wrapper">
-          <li className="modal_window_description_item">
-            <span className="modal_window_description_item_bold">Name: </span>
-            {data.response?.user.name}
-          </li>
-          {data.response?.user.location && (
-            <li className="modal_window_description_item">
-              <span className="modal_window_description_item_bold">Location: </span>{' '}
-              {data.response?.user.location}
-            </li>
-          )}
-          {data.response?.description && (
-            <li className="modal_window_description_item">
-              <span className="modal_window_description_item_bold">Description: </span>
-              {data.response?.description}
-            </li>
-          )}
-          <li className="modal_window_description_item">
-            <span className="modal_window_description_item_bold">Size: </span>
-            {data.response?.width}x{data.response?.height}
-          </li>
-          <li className="modal_window_description_item">
-            <span className="modal_window_description_item_bold">Likes: </span>
-            {data.response?.likes}
-          </li>
-        </ul>
-        <div className="modal_window_close_button" onClick={props.toggleModalWindow}>
-          X
+      )}
+      {status === 'resolved' && (
+        <div className="modal_window_wrapper">
+          <div className="modal_window_container">
+            <div className="modal_window_image_wrapper">
+              <img className="modal_window_image" src={photo?.urls.small} alt="" />
+            </div>
+            <ul className="modal_window_description_wrapper">
+              <li className="modal_window_description_item">
+                <span className="modal_window_description_item_bold">Name: </span>
+                {photo?.user.name}
+              </li>
+              {photo?.user.location && (
+                <li className="modal_window_description_item">
+                  <span className="modal_window_description_item_bold">Location: </span>{' '}
+                  {photo?.user.location}
+                </li>
+              )}
+              {photo?.description && (
+                <li className="modal_window_description_item">
+                  <span className="modal_window_description_item_bold">Description: </span>
+                  {photo?.description}
+                </li>
+              )}
+              <li className="modal_window_description_item">
+                <span className="modal_window_description_item_bold">Size: </span>
+                {photo?.width}x{photo?.height}
+              </li>
+              <li className="modal_window_description_item">
+                <span className="modal_window_description_item_bold">Likes: </span>
+                {photo?.likes}
+              </li>
+            </ul>
+            <div className="modal_window_close_button" onClick={toggle}>
+              X
+            </div>
+          </div>
+          <div className="modal_window_background" onClick={toggle}></div>
         </div>
-      </div>
-      <div className="modal_window_background" onClick={props.toggleModalWindow}></div>
-    </div>
+      )}
+    </>
   );
 }
 

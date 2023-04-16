@@ -1,30 +1,30 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './search.scss';
+import { AppDispatch, RootState } from 'store';
+import { setSearchValue } from '../../store/searchValueSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPhotos } from '../../store/fetchPhotosSlice';
 
-interface ISetStateFunction {
-  setStateFunction?: Dispatch<SetStateAction<string>>;
-}
-
-function Search({ setStateFunction }: ISetStateFunction) {
-  const [value, setValue] = useState(localStorage.getItem('search') || '');
-  const searchRef = useRef(value);
+function Search() {
+  const searchValue = useSelector((state: RootState) => state.searchValue.searchValue);
+  const [value, setValue] = useState(searchValue);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    searchRef.current = event.target.value;
+  };
+
+  const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === 'Enter' || event.code === 'NumpadEnt') {
+      dispatch(setSearchValue({ searchValue: value }));
+    }
   };
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem('search', searchRef.current);
-    };
-  }, []);
-
-  const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (setStateFunction && (event.code === 'Enter' || event.code === 'NumpadEnt')) {
-      setStateFunction(value);
+    if (searchValue) {
+      dispatch(fetchPhotos({ searchValue: searchValue }));
     }
-  };
+  }, [dispatch, searchValue]);
 
   return (
     <>

@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './card.scss';
 import { Basic } from 'unsplash-js/dist/methods/photos/types';
-import ModalWindow from '../modalWindow/modalWindow';
+import { AppDispatch } from 'store';
+import { toggleModalWindow, setPhotoId } from '../../../store/fetchPhotoById';
+import { useDispatch } from 'react-redux';
 
 export function Card(props: { data: Basic }) {
-  const [modalWindowActiv, setModalWindowActiv] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const toggleModalWindowActiv = () => {
-    setModalWindowActiv(!modalWindowActiv);
+  const toggle = () => {
+    dispatch(setPhotoId({ id: props.data.id }));
+    dispatch(toggleModalWindow());
   };
 
   return (
     <div>
-      <div className="card_container" onClick={toggleModalWindowActiv}>
+      <div className="card_container" onClick={toggle}>
         <div className="card_image_wrapper">
           <img className="card_image" src={props.data.urls.small} alt="" />
         </div>
@@ -25,9 +28,6 @@ export function Card(props: { data: Basic }) {
           </li>
         </ul>
       </div>
-      {modalWindowActiv && (
-        <ModalWindow id={props.data.id} toggleModalWindow={toggleModalWindowActiv}></ModalWindow>
-      )}
     </div>
   );
 }

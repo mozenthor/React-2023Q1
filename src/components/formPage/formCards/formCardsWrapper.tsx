@@ -1,12 +1,14 @@
 import React from 'react';
-import { IFormData } from '../form/formPage';
 import FormCard from './formCard/formCard';
 import './formCardsWrapper.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
-function FormCardsWrapper(props: { data: IFormData[] }) {
+function FormCardsWrapper() {
+  const data = useSelector((state: RootState) => state.form.cardData);
   return (
     <div className="formCards_wrapper">
-      {props.data.map((card, index) => (
+      {data.map((card, index) => (
         <FormCard key={index} data={card} />
       ))}
     </div>
